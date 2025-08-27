@@ -25,3 +25,8 @@ export function getSession() {
 export function SessionProvider({ children }: { children: React.ReactNode }) {
   return children as any;
 }
+
+// Default export placeholder (NextAuth())
+export default function NextAuth() {
+  return {} as any;
+}

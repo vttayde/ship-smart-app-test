@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
+import { RootState } from '@/store';
 import { createBooking } from '@/store/slices/bookingSlice';
 import LocationPicker from '@/components/LocationPicker';
 import MapComponent from '@/components/MapComponent';
