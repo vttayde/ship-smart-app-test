@@ -9,6 +9,7 @@
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
+  "baseUrl": ".",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -19,7 +20,16 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@reduxjs/toolkit": ["./src/lib/rtk-shim.ts"],
+      "next-auth/react": ["./src/stubs/next-auth-react.ts"],
+      "next-auth": ["./src/stubs/next-auth-react.ts"],
+      "react-redux": ["./src/stubs/react-redux.ts"],
+  "@prisma/client": ["./src/stubs/prisma-client.ts"],
+  "@radix-ui/react-slot": ["./src/stubs/radix-slot.tsx"],
+  "class-variance-authority": ["./src/stubs/cva.ts"],
+  "clsx": ["./src/stubs/clsx.ts"],
+  "tailwind-merge": ["./src/stubs/tw-merge.ts" ]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

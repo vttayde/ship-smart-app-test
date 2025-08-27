@@ -1,0 +1,200 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  firstName     String?
+  lastName      String?
+  phone         String?
+  password      String?   // Optional for OAuth users
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // NextAuth.js relations
+  accounts Account[]
+  sessions Session[]
+
+  // App relations
+  bookings Booking[]
+  @@map("users")
+}
+
+// NextAuth.js required models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verificationtokens")
+}
+
+model CourierPartner {
+  id          String   @id @default(cuid())
+  name        String
+  logo        String
+  basePrice   Float
+  pricePerKg  Float
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  bookings Booking[]
+  @@map("courier_partners")
+}
+
+model Booking {
+  id                String        @id @default(cuid())
+  bookingNumber     String        @unique
+  status            BookingStatus @default(PENDING)
+  
+  // Package details
+  fromLocation      String
+  toLocation        String
+  weight            Float
+  dimensions        Json?
+  packageValue      Float?
+  
+  // Sender details
+  senderName        String
+  senderPhone       String
+  senderAddress     String
+  
+  // Receiver details
+  receiverName      String
+  receiverPhone     String
+  receiverAddress   String
+  
+  // Pricing
+  basePrice         Float
+  totalPrice        Float
+  currency          String        @default("INR")
+  
+  // Delivery details
+  estimatedDays     String
+  actualDeliveryDate DateTime?
+  
+  // Timestamps
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  confirmedAt       DateTime?
+  
+  // Relations
+  userId            String
+  user              User          @relation(fields: [userId], references: [id])
+  courierPartnerId  String
+  courierPartner    CourierPartner @relation(fields: [courierPartnerId], references: [id])
+  
+  // Tracking
+  trackingEvents    TrackingEvent[]
+  payment           Payment?
+
+  @@map("bookings")
+}
+
+model TrackingEvent {
+  id          String   @id @default(cuid())
+  status      String
+  description String
+  location    String?
+  timestamp   DateTime @default(now())
+  
+  // Relations
+  bookingId   String
+  booking     Booking  @relation(fields: [bookingId], references: [id])
+
+  @@map("tracking_events")
+}
+
+model Payment {
+  id                String        @id @default(cuid())
+  amount            Float
+  currency          String        @default("INR")
+  status            PaymentStatus @default(PENDING)
+  paymentMethod     String?
+  transactionId     String?
+  
+  // Razorpay specific fields
+  razorpayOrderId   String?       @unique
+  razorpayPaymentId String?
+  razorpaySignature String?
+  
+  // Customer details
+  customerEmail     String
+  customerPhone     String
+  customerName      String
+  
+  // Timestamps
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  paidAt            DateTime?
+  
+  // Relations
+  bookingId         String        @unique
+  booking           Booking       @relation(fields: [bookingId], references: [id])
+
+  @@map("payments")
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  PICKED_UP
+  IN_TRANSIT
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+  RETURNED
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
