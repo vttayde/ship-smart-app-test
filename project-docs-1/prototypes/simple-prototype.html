@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ship Smart - Simple Prototype</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e40af;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #1e40af;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1e3a8a;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #1e40af;
+            border: 1px solid #1e40af;
+        }
+        
+        .btn-secondary:hover {
+            background: #1e40af;
+            color: white;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #1f2937;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            color: #6b7280;
+            margin-bottom: 40px;
+        }
+        
+        .search-form {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 40px auto;
+            max-width: 800px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 150px;
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        
+        .form-group select,
+        .form-group input {
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: #1e40af;
+            box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.2);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: #bfdbfe;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+        }
+        
+        .feature h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+        
+        .feature p {
+            color: #6b7280;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .service-card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .service-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .service-icon {
+            font-size: 32px;
+        }
+        
+        .service-details h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+        
+        .service-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e40af;
+        }
+        
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        
+        .screen {
+            display: none;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        
+        .back-btn {
+            color: #1e40af;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .service-header {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">📦 Ship Smart</div>
+        <div class="nav-buttons">
+            <button class="btn btn-secondary" onclick="showModal()">Login</button>
+            <button class="btn btn-primary" onclick="showModal()">Sign Up</button>
+        </div>
+    </div>
+
+    <!-- Screen 1: Landing Page -->
+    <div id="landing" class="screen active">
+        <div class="container">
+            <div class="hero">
+                <h1>📦 Send Your Parcel<br>Anywhere in India</h1>
+                <p>Compare. Book. Track. Delivered.</p>
+            </div>
+
+            <div class="search-form">
+                <div class="form-group">
+                    <label>FROM</label>
+                    <select>
+                        <option>Mumbai</option>
+                        <option>Delhi</option>
+                        <option>Bangalore</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>TO</label>
+                    <select>
+                        <option>Delhi</option>
+                        <option>Mumbai</option>
+                        <option>Pune</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>WEIGHT</label>
+                    <select>
+                        <option>1 KG</option>
+                        <option>2 KG</option>
+                        <option>5 KG</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-primary" onclick="showScreen('comparison')" style="height: 48px;">SEARCH</button>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🚚</div>
+                    <h3>Multiple Couriers</h3>
+                    <p>Delhivery, Shadowfax, Ekart & more</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💰</div>
+                    <h3>Best Prices</h3>
+                    <p>Compare rates from all partners</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📱</div>
+                    <h3>Real-time Tracking</h3>
+                    <p>Live GPS tracking for your parcels</p>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <p style="font-size: 18px; color: #6b7280;">📊 Trusted by 10,000+ Customers</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 2: Service Comparison -->
+    <div id="comparison" class="screen">
+        <div class="container">
+            <a href="#" onclick="showScreen('landing')" class="back-btn">← Back</a>
+            
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2 style="font-size: 28px; margin-bottom: 10px;">📍 Mumbai → Delhi | 📦 1kg Package</h2>
+                <p style="color: #6b7280;">🔢 3 Services Available | 💰 Starting from ₹95</p>
+            </div>
+
+            <!-- Delhivery -->
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-info">
+                        <div class="service-icon">🚚</div>
+                        <div class="service-details">
+                            <h3>DELHIVERY</h3>
+                            <div class="service-meta">
+                                <span class="price">₹120</span>
+                                <span>⭐ 4.2/5.0</span>
+                                <span>📅 1-2 Business Days</span>
+                                <span>🛡️ Insurance Included</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="showModal()">SELECT THIS</button>
+                </div>
+                <div class="features-list">
+                    <span>✅ Free Pickup from Home</span>
+                    <span>✅ SMS & Email Updates</span>
+                    <span>✅ Proof of Delivery</span>
+                    <span>✅ Customer Support</span>
+                </div>
+            </div>
+
+            <!-- Shadowfax -->
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-info">
+                        <div class="service-icon">🏍️</div>
+                        <div class="service-details">
+                            <h3>SHADOWFAX</h3>
+                            <div class="service-meta">
+                                <span class="price">₹150</span>
+                                <span>⭐ 4.5/5.0</span>
+                                <span>📅 Same Day Delivery</span>
+                                <span>🚀 Express Service</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="showModal()">SELECT THIS</button>
+                </div>
+                <div class="features-list">
+                    <span>✅ Same Day Delivery</span>
+                    <span>✅ Live GPS Tracking</span>
+                    <span>✅ Priority Handling</span>
+                    <span>✅ Instant Notifications</span>
+                </div>
+            </div>
+
+            <!-- Ekart -->
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-info">
+                        <div class="service-icon">📦</div>
+                        <div class="service-details">
+                            <h3>EKART</h3>
+                            <div class="service-meta">
+                                <span class="price">₹95</span>
+                                <span>⭐ 4.0/5.0</span>
+                                <span>📅 2-3 Business Days</span>
+                                <span>💰 Budget Friendly</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="showModal()">SELECT THIS</button>
+                </div>
+                <div class="features-list">
+                    <span>✅ Most Affordable Option</span>
+                    <span>✅ Reliable Network</span>
+                    <span>✅ Wide Coverage</span>
+                    <span>✅ Standard Tracking</span>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <p style="color: #6b7280;">💡 Need help choosing? Call us at <span style="color: #1e40af; font-weight: 600;">1800-XXX-XXXX</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 3: Booking Confirmation -->
+    <div id="booking" class="screen">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2 style="font-size: 36px; margin-bottom: 15px;">✅ Booking Confirmed!</h2>
+                <p style="color: #6b7280; margin-bottom: 5px;">🎉 Your booking has been confirmed successfully!</p>
+                <p style="color: #6b7280;">📧 Confirmation details sent to your email</p>
+            </div>
+
+            <div class="service-card" style="max-width: 600px; margin: 0 auto 30px;">
+                <h3 style="margin-bottom: 20px;">📋 ORDER DETAILS</h3>
+                
+                <div style="display: grid; gap: 15px;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #6b7280;">Order ID:</span>
+                        <span style="font-weight: 600;">#SR2025073101</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #6b7280;">Tracking Number:</span>
+                        <span style="font-weight: 600;">DL123456789IN</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #6b7280;">Service:</span>
+                        <span style="font-weight: 600;">DELHIVERY Express</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #6b7280;">Route:</span>
+                        <span style="font-weight: 600;">Mumbai → Delhi</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #6b7280;">Estimated Delivery:</span>
+                        <span style="font-weight: 600;">Feb 2, 2025</span>
+                    </div>
+                    <hr style="border: none; border-top: 1px solid #e5e7eb;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #6b7280;">Amount Paid:</span>
+                        <span style="font-weight: 600; color: #1e40af; font-size: 18px;">₹156.60</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #6b7280;">Payment Method:</span>
+                        <span style="font-weight: 600;">Credit Card ****3456</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="showScreen('tracking')" style="width: 100%; margin-top: 20px; padding: 15px;">
+                    📱 TRACK YOUR ORDER
+                </button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 600px; margin: 0 auto;">
+                <button class="btn btn-secondary" onclick="showScreen('landing')" style="padding: 15px;">
+                    📦 BOOK ANOTHER SHIPMENT
+                </button>
+                <button class="btn" onclick="alert('Dashboard coming soon!')" style="background: #e5e7eb; color: #374151; padding: 15px;">
+                    📊 GO TO DASHBOARD
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 4: Order Tracking -->
+    <div id="tracking" class="screen">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2 style="font-size: 36px; margin-bottom: 10px;">📍 Live Tracking</h2>
+                <p style="color: #6b7280;">Order #SR2025073101 | DELHIVERY Express</p>
+            </div>
+
+            <div class="service-card" style="max-width: 800px; margin: 0 auto 30px;">
+                <div style="margin-bottom: 30px;">
+                    <h3 style="margin-bottom: 8px;">Current Status: 📦 PICKUP SCHEDULED</h3>
+                    <p style="color: #6b7280;">Last Updated: Today, 2:30 PM</p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; position: relative;">
+                    <div style="position: absolute; top: 16px; left: 16px; right: 16px; height: 4px; background: #e5e7eb;"></div>
+                    <div style="position: absolute; top: 16px; left: 16px; width: 25%; height: 4px; background: #1e40af;"></div>
+                    
+                    <div style="text-align: center; position: relative;">
+                        <div style="width: 32px; height: 32px; background: #1e40af; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin: 0 auto 8px;">✓</div>
+                        <span style="font-size: 12px; font-weight: 600;">Order Placed</span>
+                        <div style="font-size: 10px; color: #6b7280;">Jul 31, 2:30 PM</div>
+                    </div>
+                    
+                    <div style="text-align: center; position: relative;">
+                        <div style="width: 32px; height: 32px; background: #1e40af; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin: 0 auto 8px;">●</div>
+                        <span style="font-size: 12px; font-weight: 600;">Pickup Scheduled</span>
+                        <div style="font-size: 10px; color: #6b7280;">Feb 1, 10 AM</div>
+                    </div>
+                    
+                    <div style="text-align: center; position: relative;">
+                        <div style="width: 32px; height: 32px; background: #e5e7eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #6b7280; margin: 0 auto 8px;">○</div>
+                        <span style="font-size: 12px; color: #6b7280;">In Transit</span>
+                        <div style="font-size: 10px; color: #9ca3af;">Feb 1, 2 PM</div>
+                    </div>
+                    
+                    <div style="text-align: center; position: relative;">
+                        <div style="width: 32px; height: 32px; background: #e5e7eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #6b7280; margin: 0 auto 8px;">○</div>
+                        <span style="font-size: 12px; color: #6b7280;">Out for Delivery</span>
+                        <div style="font-size: 10px; color: #9ca3af;">Feb 2, 9 AM</div>
+                    </div>
+                    
+                    <div style="text-align: center; position: relative;">
+                        <div style="width: 32px; height: 32px; background: #e5e7eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #6b7280; margin: 0 auto 8px;">○</div>
+                        <span style="font-size: 12px; color: #6b7280;">Delivered</span>
+                        <div style="font-size: 10px; color: #9ca3af;">Feb 2, Before 6PM</div>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <div style="display: grid; gap: 8px;">
+                    <span style="color: #059669;">📱 Get SMS updates: +91 9876543210 ✅</span>
+                    <span style="color: #059669;">📧 Get Email updates: user@email.com ✅</span>
+                </div>
+            </div>
+
+            <!-- Support -->
+            <div class="service-card" style="max-width: 800px; margin: 0 auto;">
+                <h3 style="margin-bottom: 15px;">📞 SUPPORT</h3>
+                <p style="color: #6b7280; margin-bottom: 20px;">Need help with your order?</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <button class="btn btn-secondary" style="padding: 15px;">📞 Call: 1800-XXX-XXXX</button>
+                    <button class="btn btn-secondary" style="padding: 15px;">💬 Start Live Chat</button>
+                    <button class="btn btn-secondary" style="padding: 15px;">📧 Email Support</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authentication Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="hideModal()">×</button>
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h3 style="font-size: 24px; margin-bottom: 10px;">🔐 Login Required</h3>
+                <p style="color: #6b7280;">To book this service, please login or create a new account</p>
+            </div>
+
+            <form style="display: grid; gap: 20px;">
+                <div class="form-group">
+                    <label>📱 Phone Number</label>
+                    <input type="tel" placeholder="+91 |" style="padding: 12px; border: 1px solid #d1d5db; border-radius: 8px;">
+                </div>
+                
+                <div class="form-group">
+                    <label>🔑 Password</label>
+                    <input type="password" placeholder="••••••••••••••••••••••••••••" style="padding: 12px; border: 1px solid #d1d5db; border-radius: 8px;">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <button type="button" class="btn btn-primary" onclick="proceedToBooking()">LOGIN</button>
+                    <button type="button" class="btn btn-secondary">LOGIN WITH OTP</button>
+                </div>
+
+                <div style="text-align: center; color: #6b7280;">
+                    ──────────── OR ────────────
+                </div>
+
+                <button type="button" class="btn" style="background: #4285f4; color: white; padding: 12px;">
+                    🔵 Continue with Google
+                </button>
+
+                <button type="button" class="btn" style="background: #1877f2; color: white; padding: 12px;">
+                    📘 Continue with Facebook
+                </button>
+
+                <p style="text-align: center; font-size: 14px; color: #6b7280;">
+                    Don't have an account? <a href="#" style="color: #1e40af;">Sign Up</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(screenId) {
+            // Hide all screens
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show selected screen
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function showModal() {
+            document.getElementById('authModal').classList.add('show');
+        }
+
+        function hideModal() {
+            document.getElementById('authModal').classList.remove('show');
+        }
+
+        function proceedToBooking() {
+            hideModal();
+            showScreen('booking');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('authModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideModal();
+            }
+        });
+    </script>
+</body>
+</html>
