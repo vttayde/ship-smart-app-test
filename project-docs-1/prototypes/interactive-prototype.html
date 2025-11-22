@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ship Smart - Interactive Prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E40AF',
+                        secondary: '#3B82F6',
+                        accent: '#059669',
+                        warning: '#F59E0B',
+                        error: '#EF4444'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .prototype-screen { display: none; }
+        .prototype-screen.active { display: block; }
+        .fade-in { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    
+    <!-- Navigation -->
+    <div class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-primary">📦 Ship Smart</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-700 hover:text-primary">Services</a>
+                    <a href="#" class="text-gray-700 hover:text-primary">Pricing</a>
+                    <a href="#" class="text-gray-700 hover:text-primary">Support</a>
+                </div>
+                <div class="flex space-x-4">
+                    <button class="text-primary hover:text-blue-800" onclick="showAuth('login')">Login</button>
+                    <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-800" onclick="showAuth('signup')">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 1: Landing Page -->
+    <div id="landing" class="prototype-screen active fade-in">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <!-- Hero Section -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
+                    📦 Send Your Parcel<br>Anywhere in India
+                </h1>
+                <p class="text-xl text-gray-600 mb-8">
+                    Compare. Book. Track. Delivered.
+                </p>
+            </div>
+
+            <!-- Search Form -->
+            <div class="bg-white rounded-xl shadow-lg p-8 max-w-4xl mx-auto mb-12">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">FROM</label>
+                        <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option>Mumbai</option>
+                            <option>Delhi</option>
+                            <option>Bangalore</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">TO</label>
+                        <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option>Delhi</option>
+                            <option>Mumbai</option>
+                            <option>Pune</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">WEIGHT</label>
+                        <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option>1 KG</option>
+                            <option>2 KG</option>
+                            <option>5 KG</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button class="w-full bg-primary text-white p-3 rounded-lg hover:bg-blue-800 font-semibold" onclick="showScreen('comparison')">
+                            SEARCH RATES
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="text-center">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">🚚</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Multiple Couriers</h3>
+                    <p class="text-gray-600">Delhivery, Shadowfax, Ekart & more</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">💰</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Best Prices</h3>
+                    <p class="text-gray-600">Compare rates from all partners</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">📱</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Real-time Tracking</h3>
+                    <p class="text-gray-600">Live GPS tracking for your parcels</p>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="text-center">
+                <p class="text-lg text-gray-600">📊 Trusted by 10,000+ Customers</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 2: Service Comparison -->
+    <div id="comparison" class="prototype-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-8">
+                <button onclick="showScreen('landing')" class="text-primary hover:text-blue-800">
+                    ← Back
+                </button>
+                <div class="text-center">
+                    <h2 class="text-2xl font-bold">📍 Mumbai → Delhi | 📦 1kg Package</h2>
+                    <p class="text-gray-600">🔢 3 Services Available | 💰 Starting from ₹95</p>
+                </div>
+                <button class="text-primary hover:text-blue-800">🔄 Modify Search</button>
+            </div>
+
+            <!-- Service Cards -->
+            <div class="space-y-6">
+                <!-- Delhivery -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center space-x-4">
+                            <div class="text-3xl">🚚</div>
+                            <div>
+                                <h3 class="text-xl font-bold">DELHIVERY</h3>
+                                <div class="flex items-center space-x-4 text-sm text-gray-600">
+                                    <span class="font-semibold text-2xl text-primary">₹120</span>
+                                    <span>⭐ 4.2/5.0</span>
+                                    <span>📅 1-2 Business Days</span>
+                                    <span>🛡️ Insurance Included</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-800 font-semibold" onclick="showAuth('booking')">
+                            SELECT THIS
+                        </button>
+                    </div>
+                    <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-600">
+                        <span>✅ Free Pickup from Home</span>
+                        <span>✅ SMS & Email Updates</span>
+                        <span>✅ Proof of Delivery</span>
+                        <span>✅ Customer Support</span>
+                    </div>
+                </div>
+
+                <!-- Shadowfax -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center space-x-4">
+                            <div class="text-3xl">🏍️</div>
+                            <div>
+                                <h3 class="text-xl font-bold">SHADOWFAX</h3>
+                                <div class="flex items-center space-x-4 text-sm text-gray-600">
+                                    <span class="font-semibold text-2xl text-primary">₹150</span>
+                                    <span>⭐ 4.5/5.0</span>
+                                    <span>📅 Same Day Delivery</span>
+                                    <span>🚀 Express Service</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-800 font-semibold" onclick="showAuth('booking')">
+                            SELECT THIS
+                        </button>
+                    </div>
+                    <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-600">
+                        <span>✅ Same Day Delivery</span>
+                        <span>✅ Live GPS Tracking</span>
+                        <span>✅ Priority Handling</span>
+                        <span>✅ Instant Notifications</span>
+                    </div>
+                </div>
+
+                <!-- Ekart -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center space-x-4">
+                            <div class="text-3xl">📦</div>
+                            <div>
+                                <h3 class="text-xl font-bold">EKART</h3>
+                                <div class="flex items-center space-x-4 text-sm text-gray-600">
+                                    <span class="font-semibold text-2xl text-primary">₹95</span>
+                                    <span>⭐ 4.0/5.0</span>
+                                    <span>📅 2-3 Business Days</span>
+                                    <span>💰 Budget Friendly</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-800 font-semibold" onclick="showAuth('booking')">
+                            SELECT THIS
+                        </button>
+                    </div>
+                    <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-600">
+                        <span>✅ Most Affordable Option</span>
+                        <span>✅ Reliable Network</span>
+                        <span>✅ Wide Coverage</span>
+                        <span>✅ Standard Tracking</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Help -->
+            <div class="mt-8 text-center">
+                <p class="text-gray-600">💡 Need help choosing? Call us at <span class="text-primary font-semibold">1800-XXX-XXXX</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authentication Modal -->
+    <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+            <div class="text-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900">🔐 Login Required</h3>
+                <p class="text-gray-600 mt-2">To book this service, please login or create a new account</p>
+            </div>
+
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">📱 Phone Number</label>
+                    <input type="tel" placeholder="+91 |" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">🔑 Password</label>
+                    <input type="password" placeholder="••••••••••••••••••••••••••••" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <button type="button" class="bg-primary text-white p-3 rounded-lg hover:bg-blue-800 font-semibold" onclick="proceedToBooking()">
+                        LOGIN
+                    </button>
+                    <button type="button" class="border border-primary text-primary p-3 rounded-lg hover:bg-blue-50 font-semibold">
+                        LOGIN WITH OTP
+                    </button>
+                </div>
+
+                <div class="text-center text-gray-500">
+                    ──────────── OR ────────────
+                </div>
+
+                <button type="button" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 font-semibold">
+                    🔵 Continue with Google
+                </button>
+
+                <button type="button" class="w-full bg-blue-800 text-white p-3 rounded-lg hover:bg-blue-900 font-semibold">
+                    📘 Continue with Facebook
+                </button>
+
+                <p class="text-center text-sm text-gray-600">
+                    Don't have an account? <button type="button" class="text-primary hover:underline">Sign Up</button>
+                </p>
+            </form>
+
+            <button onclick="hideAuth()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                ✕
+            </button>
+        </div>
+    </div>
+
+    <!-- Screen 3: Booking Confirmation -->
+    <div id="booking" class="prototype-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900">✅ Booking Confirmed!</h2>
+                <p class="text-gray-600 mt-2">🎉 Your booking has been confirmed successfully!</p>
+                <p class="text-gray-600">📧 Confirmation details sent to your email</p>
+            </div>
+
+            <!-- Order Details -->
+            <div class="bg-white rounded-xl shadow-lg p-8 max-w-2xl mx-auto mb-8">
+                <h3 class="text-xl font-bold mb-6">📋 ORDER DETAILS</h3>
+                
+                <div class="space-y-4">
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Order ID:</span>
+                        <span class="font-semibold">#SR2025073101</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Tracking Number:</span>
+                        <span class="font-semibold">DL123456789IN</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Service:</span>
+                        <span class="font-semibold">DELHIVERY Express</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Route:</span>
+                        <span class="font-semibold">Mumbai → Delhi</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Estimated Delivery:</span>
+                        <span class="font-semibold">Feb 2, 2025</span>
+                    </div>
+                    <hr>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Amount Paid:</span>
+                        <span class="font-semibold text-primary text-lg">₹156.60</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Payment Method:</span>
+                        <span class="font-semibold">Credit Card ****3456</span>
+                    </div>
+                </div>
+
+                <button class="w-full mt-6 bg-primary text-white p-3 rounded-lg hover:bg-blue-800 font-semibold" onclick="showScreen('tracking')">
+                    📱 TRACK YOUR ORDER
+                </button>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                <button class="border border-primary text-primary p-3 rounded-lg hover:bg-blue-50 font-semibold" onclick="showScreen('landing')">
+                    📦 BOOK ANOTHER SHIPMENT
+                </button>
+                <button class="bg-gray-200 text-gray-700 p-3 rounded-lg hover:bg-gray-300 font-semibold" onclick="showScreen('dashboard')">
+                    📊 GO TO DASHBOARD
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 4: Order Tracking -->
+    <div id="tracking" class="prototype-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900">📍 Live Tracking</h2>
+                <p class="text-gray-600 mt-2">Order #SR2025073101 | DELHIVERY Express</p>
+            </div>
+
+            <!-- Tracking Status -->
+            <div class="bg-white rounded-xl shadow-lg p-8 max-w-4xl mx-auto mb-8">
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold mb-2">Current Status: 📦 PICKUP SCHEDULED</h3>
+                    <p class="text-gray-600">Last Updated: Today, 2:30 PM</p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="relative mb-8">
+                    <div class="flex justify-between items-center">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">✓</div>
+                            <span class="text-sm mt-2 font-semibold">Order Placed</span>
+                            <span class="text-xs text-gray-500">Jul 31, 2:30 PM</span>
+                        </div>
+                        <div class="flex-1 h-1 bg-primary mx-2"></div>
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">●</div>
+                            <span class="text-sm mt-2 font-semibold">Pickup Scheduled</span>
+                            <span class="text-xs text-gray-500">Feb 1, 10 AM</span>
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-300 mx-2"></div>
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-gray-500">○</div>
+                            <span class="text-sm mt-2 text-gray-500">In Transit</span>
+                            <span class="text-xs text-gray-400">Feb 1, 2 PM</span>
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-300 mx-2"></div>
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-gray-500">○</div>
+                            <span class="text-sm mt-2 text-gray-500">Out for Delivery</span>
+                            <span class="text-xs text-gray-400">Feb 2, 9 AM</span>
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-300 mx-2"></div>
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-gray-500">○</div>
+                            <span class="text-sm mt-2 text-gray-500">Delivered</span>
+                            <span class="text-xs text-gray-400">Feb 2, Before 6PM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <div class="space-y-2">
+                    <div class="flex items-center">
+                        <span class="text-green-600">📱 Get SMS updates: +91 9876543210 ✅</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="text-green-600">📧 Get Email updates: user@email.com ✅</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support -->
+            <div class="bg-white rounded-xl shadow-lg p-8 max-w-4xl mx-auto">
+                <h3 class="text-xl font-bold mb-4">📞 SUPPORT</h3>
+                <p class="text-gray-600 mb-4">Need help with your order?</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <button class="border border-primary text-primary p-3 rounded-lg hover:bg-blue-50 font-semibold">
+                        📞 Call: 1800-XXX-XXXX
+                    </button>
+                    <button class="border border-primary text-primary p-3 rounded-lg hover:bg-blue-50 font-semibold">
+                        💬 Start Live Chat
+                    </button>
+                    <button class="border border-primary text-primary p-3 rounded-lg hover:bg-blue-50 font-semibold">
+                        📧 Email Support
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(screenId) {
+            // Hide all screens
+            const screens = document.querySelectorAll('.prototype-screen');
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show selected screen
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function showAuth(type) {
+            const modal = document.getElementById('authModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function hideAuth() {
+            const modal = document.getElementById('authModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function proceedToBooking() {
+            hideAuth();
+            showScreen('booking');
+        }
+
+        // Add some interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate form interactions
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.classList.add('ring-2', 'ring-primary');
+                });
+                input.addEventListener('blur', function() {
+                    this.classList.remove('ring-2', 'ring-primary');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

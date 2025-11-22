@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📦 Ship Smart - Mobile Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            background: white;
+            border-radius: 15px;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .section h2 {
+            color: #1e40af;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .wireframe {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+        
+        .wireframe-mobile {
+            max-width: 300px;
+            margin: 0 auto;
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 20px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            font-size: 0.75rem;
+            line-height: 1.3;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .feature-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .feature-card h3 {
+            color: #1e40af;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .tech-tag {
+            background: #1e40af;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .color-box {
+            height: 60px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        
+        .primary-blue { background: #1E40AF; }
+        .medium-blue { background: #3B82F6; }
+        .light-blue { background: #60A5FA; }
+        .success { background: #059669; }
+        .error { background: #EF4444; }
+        .warning { background: #F59E0B; }
+        
+        .user-flow {
+            background: #f0f9ff;
+            border: 2px solid #0ea5e9;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .flow-step {
+            background: white;
+            border: 2px solid #0ea5e9;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .flow-step::after {
+            content: '↓';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0ea5e9;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .flow-step:last-child::after {
+            display: none;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .mobile-screens {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .screen-title {
+            text-align: center;
+            color: #1e40af;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .mobile-screens {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 20px;
+            margin-top: 40px;
+        }
+        
+        .cta-button {
+            background: white;
+            color: #1e40af;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📦 SHIP SMART</h1>
+            <p>Logistics Aggregation Platform</p>
+            <p style="margin-top: 10px; font-size: 1rem;">Connect consumers with multiple courier service providers</p>
+        </div>
+
+        <!-- Project Overview -->
+        <div class="section">
+            <h2>🎯 Project Overview</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>🚚 Multiple Couriers</h3>
+                    <p>Delhivery, Shadowfax, Ekart & more</p>
+                </div>
+                <div class="feature-card">
+                    <h3>💰 Best Prices</h3>
+                    <p>Compare rates from all partners</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📱 Real-time Tracking</h3>
+                    <p>Live GPS tracking for parcels</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔐 Secure Payments</h3>
+                    <p>Safe & secure booking system</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="section">
+            <h2>🏗️ Technology Stack</h2>
+            <h3 style="margin-bottom: 10px;">Frontend</h3>
+            <div class="tech-stack">
+                <span class="tech-tag">Next.js 15</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">Tailwind CSS</span>
+                <span class="tech-tag">shadcn/ui</span>
+            </div>
+            
+            <h3 style="margin: 20px 0 10px 0;">Backend</h3>
+            <div class="tech-stack">
+                <span class="tech-tag">NestJS</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Redis</span>
+                <span class="tech-tag">Prisma</span>
+            </div>
+            
+            <h3 style="margin: 20px 0 10px 0;">Integrations</h3>
+            <div class="tech-stack">
+                <span class="tech-tag">Razorpay</span>
+                <span class="tech-tag">Google Maps</span>
+                <span class="tech-tag">Twilio</span>
+                <span class="tech-tag">Courier APIs</span>
+            </div>
+        </div>
+
+        <!-- User Flow -->
+        <div class="section">
+            <h2>👥 User Journey</h2>
+            <div class="user-flow">
+                <div class="flow-step">
+                    <strong>🏠 Landing Page</strong><br>
+                    User enters pickup & delivery locations
+                </div>
+                <div class="flow-step">
+                    <strong>🔍 Service Comparison</strong><br>
+                    Compare prices from multiple couriers
+                </div>
+                <div class="flow-step">
+                    <strong>🔐 Authentication</strong><br>
+                    Login/Signup required for booking only
+                </div>
+                <div class="flow-step">
+                    <strong>📝 Booking Form</strong><br>
+                    Fill parcel & address details
+                </div>
+                <div class="flow-step">
+                    <strong>💳 Payment</strong><br>
+                    Secure payment processing
+                </div>
+                <div class="flow-step">
+                    <strong>📦 Order Tracking</strong><br>
+                    Real-time parcel tracking
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Wireframes -->
+        <div class="section">
+            <h2>📱 Mobile Wireframes</h2>
+            <div class="mobile-screens">
+                <!-- Landing Page -->
+                <div>
+                    <div class="screen-title">Landing Page</div>
+                    <div class="wireframe-mobile">┌─────────────────────────┐
+│ ☰ [📦 SHIP SMART] 👤   │
+├─────────────────────────┤
+│                         │
+│   📦 Send Your Parcel   │
+│     Anywhere in India   │
+│                         │
+│ Compare. Book. Track.   │
+│       Delivered.        │
+│                         │
+│ ┌─────────────────────┐ │
+│ │ FROM:               │ │
+│ │ ┌─────────────────┐ │ │
+│ │ │ Mumbai         ▼│ │ │
+│ │ └─────────────────┘ │ │
+│ │                     │ │
+│ │ TO:                 │ │
+│ │ ┌─────────────────┐ │ │
+│ │ │ Delhi          ▼│ │ │
+│ │ └─────────────────┘ │ │
+│ │                     │ │
+│ │ ┌─────────────────┐ │ │
+│ │ │   SEARCH RATES  │ │ │
+│ │ └─────────────────┘ │ │
+│ └─────────────────────┘ │
+│                         │
+│   🎯 Why Ship Smart?    │
+│                         │
+│ ┌─────────────────────┐ │
+│ │ 🚚 Multiple         │ │
+│ │    Couriers         │ │
+│ └─────────────────────┘ │
+│                         │
+│ ┌─────────────────────┐ │
+│ │ 💰 Best Prices      │ │
+│ └─────────────────────┘ │
+│                         │
+│ ┌─────────────────────┐ │
+│ │ 📱 Real-time        │ │
+│ │    Tracking         │ │
+│ └─────────────────────┘ │
+└─────────────────────────┘</div>
+                </div>
+
+                <!-- Service Comparison -->
+                <div>
+                    <div class="screen-title">Service Comparison</div>
+                    <div class="wireframe-mobile">┌─────────────────────────┐
+│ ← Back  [📦 SHIP SMART] │
+├─────────────────────────┤
+│                         │
+│ Mumbai → Delhi          │
+│ 1kg Package             │
+│                         │
+│ 3 Services Available    │
+│ Starting from ₹95       │
+│                         │
+│ ┌─────────────────────┐ │
+│ │ 🚚 DELHIVERY        │ │
+│ │ ₹120  1-2 Days ⭐4.2│ │
+│ │ ✅ Free Pickup      │ │
+│ │ ✅ SMS Updates      │ │
+│ │ ┌─────────────────┐ │ │
+│ │ │   SELECT THIS   │ │ │
+│ │ └─────────────────┘ │ │
+│ └─────────────────────┘ │
+│                         │
+│ ┌─────────────────────┐ │
+│ │ 🏍️ SHADOWFAX       │ │
+│ │ ₹150  Same Day ⭐4.5│ │
+│ │ ✅ Express Service  │ │
+│ │ ✅ GPS Tracking     │ │
+│ │ ┌─────────────────┐ │ │
+│ │ │   SELECT THIS   │ │ │
+│ │ └─────────────────┘ │ │
+│ └─────────────────────┘ │
+│                         │
+│ ┌─────────────────────┐ │
+│ │ 📦 EKART           │ │
+│ │ ₹95   2-3 Days ⭐4.0│ │
+│ │ ✅ Budget Friendly  │ │
+│ │ ✅ Wide Coverage    │ │
+│ │ ┌─────────────────┐ │ │
+│ │ │   SELECT THIS   │ │ │
+│ │ └─────────────────┘ │ │
+│ └─────────────────────┘ │
+└─────────────────────────┘</div>
+                </div>
+
+                <!-- Authentication Modal -->
+                <div>
+                    <div class="screen-title">Login Required</div>
+                    <div class="wireframe-mobile">┌─────────────────────────┐
+│      🔐 LOGIN REQUIRED  │
+├─────────────────────────┤
+│                         │
+│ To book this service,   │
+│ please login or create  │
+│ a new account           │
+│                         │
+│ 📱 Phone Number         │
+│ ┌─────────────────────┐ │
+│ │ +91 |_____________  │ │
+│ └─────────────────────┘ │
+│                         │
+│ 🔑 Password             │
+│ ┌─────────────────────┐ │
+│ │ ••••••••••••••••    │ │
+│ └─────────────────────┘ │
+│                         │
+│ ┌─────────────────────┐ │
+│ │       LOGIN         │ │
+│ └─────────────────────┘ │
+│                         │
+│ ┌─────────────────────┐ │
+│ │   LOGIN WITH OTP    │ │
+│ └─────────────────────┘ │
+│                         │
+│ ──────── OR ────────   │
+│                         │
+│ ┌─────────────────────┐ │
+│ │ 🔵 Continue Google  │ │
+│ └─────────────────────┘ │
+│                         │
+│ ┌─────────────────────┐ │
+│ │ 📘 Continue Facebook│ │
+│ └─────────────────────┘ │
+│                         │
+│ Don't have account?     │
+│ [Sign Up]               │
+│                         │
+│                [✕ Close]│
+└─────────────────────────┘</div>
+                </div>
+
+                <!-- Order Tracking -->
+                <div>
+                    <div class="screen-title">Order Tracking</div>
+                    <div class="wireframe-mobile">┌─────────────────────────┐
+│ [📦 SHIP SMART]    👤   │
+├─────────────────────────┤
+│                         │
+│   ✅ ORDER CONFIRMED!   │
+│                         │
+│ 🎉 Booking confirmed!   │
+│ 📧 Details sent to email│
+│                         │
+│ ┌─────────────────────┐ │
+│ │   📋 ORDER DETAILS  │ │
+│ │                     │ │
+│ │ Order: #SR20250731  │ │
+│ │ Track: DL123456789  │ │
+│ │ Service: DELHIVERY  │ │
+│ │ Route: Mumbai→Delhi │ │
+│ │ Delivery: Feb 2     │ │
+│ │                     │ │
+│ │ Paid: ₹156.60       │ │
+│ │ Method: Card ****56 │ │
+│ │                     │ │
+│ │ ┌─────────────────┐ │ │
+│ │ │  TRACK ORDER    │ │ │
+│ │ └─────────────────┘ │ │
+│ └─────────────────────┘ │
+│                         │
+│ ┌─────────────────────┐ │
+│ │   📍 LIVE TRACKING  │ │
+│ │                     │ │
+│ │ Status: 📦 PICKUP   │ │
+│ │ SCHEDULED           │ │
+│ │                     │ │
+│ │ ●──○──○──○──○       │ │
+│ │ │  │  │  │  │       │ │
+│ │ Order Pickup Transit│ │
+│ │ Placed Scheduled    │ │
+│ │                     │ │
+│ │ ✅Jul31 ⏳Feb1      │ │
+│ │ 2:30PM  10AM        │ │
+│ │                     │ │
+│ │ 📱SMS: +919876✅    │ │
+│ │ 📧Email: user@✅    │ │
+│ └─────────────────────┘ │
+│                         │
+│ ┌─────────────────────┐ │
+│ │  BOOK ANOTHER       │ │
+│ │    SHIPMENT         │ │
+│ └─────────────────────┘ │
+└─────────────────────────┘</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Color Scheme -->
+        <div class="section">
+            <h2>🎨 Color Palette</h2>
+            <h3 style="margin-bottom: 10px;">Primary Colors</h3>
+            <div class="color-palette">
+                <div class="color-box primary-blue">#1E40AF</div>
+                <div class="color-box medium-blue">#3B82F6</div>
+                <div class="color-box light-blue">#60A5FA</div>
+            </div>
+            
+            <h3 style="margin: 20px 0 10px 0;">Accent Colors</h3>
+            <div class="color-palette">
+                <div class="color-box success">#059669</div>
+                <div class="color-box error">#EF4444</div>
+                <div class="color-box warning">#F59E0B</div>
+            </div>
+        </div>
+
+        <!-- Project Stats -->
+        <div class="section">
+            <h2>📊 Project Timeline</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">11</span>
+                    <span>Weeks</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">8</span>
+                    <span>Wireframes</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">3+</span>
+                    <span>Couriers</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">100%</span>
+                    <span>Mobile Ready</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h2 style="margin-bottom: 20px;">🚀 Ready to Build?</h2>
+            <p style="margin-bottom: 30px; font-size: 1.1rem;">
+                Complete project planning and wireframes are ready.<br>
+                Let's start building the logistics platform!
+            </p>
+            <button class="cta-button">✅ Approve Designs</button>
+            <button class="cta-button">🚀 Start Development</button>
+            <button class="cta-button">📋 Review Again</button>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactivity for mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for better mobile experience
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Add touch feedback for buttons
+            document.querySelectorAll('.cta-button').forEach(button => {
+                button.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.95)';
+                });
+                
+                button.addEventListener('touchend', function() {
+                    this.style.transform = 'scale(1)';
+                });
+                
+                button.addEventListener('click', function() {
+                    alert('Feature: ' + this.textContent + '\n\nThis will be implemented in the development phase!');
+                });
+            });
+
+            // Add animation to stats on scroll
+            const observerOptions = {
+                threshold: 0.5,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.section').forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+</html>
