@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { signIn, getSession } from 'next-auth/react'
+// Simplified mock auth (next-auth stub removed for now)
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -16,43 +16,31 @@ export default function SignInPage() {
   const router = useRouter()
 
   const handleCredentialsSignIn = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError('')
-
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
     try {
-      const result = await signIn('credentials', {
-        email,
-        password,
-        redirect: false,
-      })
-
-      if (result?.error) {
-        setError('Invalid credentials')
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        router.push('/');
       } else {
-        // Refresh session and redirect
-        const session = await getSession()
-        if (session) {
-          router.push('/')
-          router.refresh()
-        }
+        setError(data.error || 'Invalid credentials');
       }
-    } catch (error) {
-      setError('An error occurred. Please try again.')
+    } catch (err) {
+      setError('Network error');
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleGoogleSignIn = async () => {
-    setIsLoading(true)
-    try {
-      await signIn('google', { callbackUrl: '/' })
-    } catch (error) {
-      setError('Google sign-in failed')
-      setIsLoading(false)
-    }
-  }
+    setError('Google sign-in disabled in mock mode');
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">

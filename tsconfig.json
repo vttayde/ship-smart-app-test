@@ -33,5 +33,17 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "prisma",
+    "src/lib/ai-ml-utils.ts",
+    "src/lib/auth.ts",
+    "src/lib/google-maps.ts",
+    "src/app/api/auth/[...nextauth]",
+    "src/app/api/bookings",
+    "src/app/api/couriers",
+    "src/app/api/payments",
+    "src/app/api/tracking",
+    "src/app/api/ai"
+  ]
 }

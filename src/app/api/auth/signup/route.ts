@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
-import { findUserByEmail, createUser } from '@/lib/mock-db';
+import { findUserByEmail, createUser, MockUser } from '@/lib/mock-db';
+
+function hashPassword(raw: string) {
+  return 'mock$' + raw;
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,7 +18,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if user already exists
-  const existingUser = findUserByEmail(email);
+  const existingUser: MockUser | null = findUserByEmail(email);
     
     if (existingUser) {
       return NextResponse.json(
@@ -42,7 +45,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = hashPassword(password);
 
     // Create new user
     const newUser = createUser({

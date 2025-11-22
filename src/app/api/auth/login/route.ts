@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
-import { findUserByEmail } from '@/lib/mock-db';
+import { findUserByEmail, MockUser } from '@/lib/mock-db';
+
+// Simple mock password verify (since bcrypt not available in mock mode)
+function verifyPassword(raw: string, stored: string) {
+  // stored format: 'mock$' + original
+  if (stored.startsWith('mock$')) return stored === 'mock$' + raw;
+  // fallback plain text comparison
+  return stored === raw;
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,7 +22,7 @@ export async function POST(request: NextRequest) {
     }
 
   // Find user in mock database
-  const user = findUserByEmail(email);
+  const user: MockUser | null = findUserByEmail(email);
     
     if (!user) {
       return NextResponse.json(
@@ -25,7 +32,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check password
-  const isValidPassword = await bcrypt.compare(password, user.password);
+  const isValidPassword = verifyPassword(password, user.password);
     if (!isValidPassword) {
       return NextResponse.json(
         { success: false, error: 'Invalid email or password' },

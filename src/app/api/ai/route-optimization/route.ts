@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { optimizeMultiStopRoute } from '@/lib/ai-ml-utils';
+// AI logic disabled in mock mode
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,21 +23,7 @@ export async function POST(request: NextRequest) {
     };
 
     // Optimize route using AI
-    const optimization = await optimizeMultiStopRoute(
-      pickups,
-      destination,
-      defaultConstraints
-    );
-
-    return NextResponse.json({
-      success: true,
-      optimization,
-      metadata: {
-        algorithm: 'Enhanced TSP with Priority Weighting',
-        processedAt: new Date().toISOString(),
-        computationTime: Date.now() - Date.now(), // In real implementation, track actual time
-      }
-    });
+  return NextResponse.json({ success: true, optimization: { disabled: true }, message: 'AI disabled in mock mode' });
   } catch (error) {
     console.error('Route optimization error:', error);
     return NextResponse.json(

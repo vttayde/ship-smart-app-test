@@ -1,6 +1,4 @@
-import NextAuth from "next-auth"
-import { authOptions } from "@/lib/auth"
-
-const handler = NextAuth(authOptions)
-
-export { handler as GET, handler as POST }
+// NextAuth disabled in mock mode
+import { NextResponse } from 'next/server';
+export function GET() { return NextResponse.json({ disabled: true }, { status: 501 }); }
+export function POST() { return NextResponse.json({ disabled: true }, { status: 501 }); }

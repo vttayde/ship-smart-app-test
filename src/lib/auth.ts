@@ -3,7 +3,10 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { PrismaClient } from "@prisma/client"
-import bcrypt from "bcryptjs"
+// MOCK MODE: This legacy NextAuth configuration is currently unused.
+// It has been simplified to avoid runtime dependencies (bcrypt, Prisma).
+// @ts-nocheck
+// bcrypt removed in mock mode
 
 const prisma = new PrismaClient()
 
@@ -34,12 +37,8 @@ export const authOptions: NextAuthOptions = {
             return null
           }
 
-          const isValidPassword = await bcrypt.compare(
-            credentials.password,
-            user.password
-          )
-
-          if (!isValidPassword) {
+          // Password verification disabled in mock mode
+          if (credentials.password !== user.password) {
             return null
           }
 

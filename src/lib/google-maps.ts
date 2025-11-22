@@ -1,10 +1,5 @@
-import { Client } from '@googlemaps/google-maps-services-js';
-
-// Server-side Google Maps client
-const googleMapsClient = new Client({});
-
-// API Key from environment
-const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY!;
+// Google Maps disabled in mock mode
+// All functions return mock data to avoid external API calls
 
 // Interface for location coordinates
 export interface Location {
@@ -35,107 +30,16 @@ export interface RouteOptimization {
 }
 
 // Geocode an address to get coordinates
-export async function geocodeAddress(address: string): Promise<Location | null> {
-  try {
-    const response = await googleMapsClient.geocode({
-      params: {
-        address,
-        key: GOOGLE_MAPS_API_KEY,
-      },
-    });
-
-    if (response.data.results.length > 0) {
-      const result = response.data.results[0];
-      return {
-        lat: result.geometry.location.lat,
-        lng: result.geometry.location.lng,
-        address: result.formatted_address,
-      };
-    }
-    return null;
-  } catch (error) {
-    console.error('Geocoding error:', error);
-    return null;
-  }
-}
+export async function geocodeAddress(address: string): Promise<Location | null> { return { lat: 0, lng: 0, address }; }
 
 // Reverse geocode coordinates to get address
-export async function reverseGeocode(lat: number, lng: number): Promise<string | null> {
-  try {
-    const response = await googleMapsClient.reverseGeocode({
-      params: {
-        latlng: { lat, lng },
-        key: GOOGLE_MAPS_API_KEY,
-      },
-    });
-
-    if (response.data.results.length > 0) {
-      return response.data.results[0].formatted_address;
-    }
-    return null;
-  } catch (error) {
-    console.error('Reverse geocoding error:', error);
-    return null;
-  }
-}
+export async function reverseGeocode(_lat: number, _lng: number): Promise<string | null> { return 'Mock Address'; }
 
 // Calculate distance and duration between two points
-export async function calculateDistance(
-  origin: string | Location,
-  destination: string | Location
-): Promise<DistanceResult | null> {
-  try {
-    const originParam = typeof origin === 'string' ? origin : `${origin.lat},${origin.lng}`;
-    const destinationParam = typeof destination === 'string' ? destination : `${destination.lat},${destination.lng}`;
-
-    const response = await googleMapsClient.distancematrix({
-      params: {
-        origins: [originParam],
-        destinations: [destinationParam],
-        key: GOOGLE_MAPS_API_KEY,
-        units: 'metric',
-      },
-    });
-
-    const element = response.data.rows[0]?.elements[0];
-    if (element && element.status === 'OK') {
-      return {
-        distance: element.distance,
-        duration: element.duration,
-        status: element.status,
-      };
-    }
-    return null;
-  } catch (error) {
-    console.error('Distance calculation error:', error);
-    return null;
-  }
-}
+export async function calculateDistance(_origin: string | Location, _destination: string | Location): Promise<DistanceResult | null> { return { distance: { text: '0 km', value: 0 }, duration: { text: '0 mins', value: 0 }, status: 'OK' }; }
 
 // Get directions between points
-export async function getDirections(route: RouteOptimization) {
-  try {
-    const originParam = `${route.origin.lat},${route.origin.lng}`;
-    const destinationParam = `${route.destination.lat},${route.destination.lng}`;
-    
-    const waypointsParam = route.waypoints?.map(wp => `${wp.lat},${wp.lng}`);
-
-    const response = await googleMapsClient.directions({
-      params: {
-        origin: originParam,
-        destination: destinationParam,
-        waypoints: waypointsParam,
-        optimize: route.optimizeWaypoints || false,
-        key: GOOGLE_MAPS_API_KEY,
-      },
-    });
-
-    return response.data;
-  } catch (error) {
-    console.error('Directions error:', error);
-    return null;
-  }
-}
+export async function getDirections(_route: RouteOptimization) { return { mock: true }; }
 
 // Calculate shipping cost based on distance
 export function calculateShippingCost(distanceKm: number, weightKg: number, baseRatePerKm: number = 2): number {

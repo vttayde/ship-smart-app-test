@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { createBooking } from '@/store/slices/bookingSlice';
@@ -57,7 +56,9 @@ interface CourierOption {
 
 export default function BookShipmentPage() {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  // Mock session (next-auth disabled)
+  const session: any = { user: { id: 'demo-user' } };
+  const status: 'authenticated' | 'unauthenticated' | 'loading' = 'authenticated';
   const dispatch = useDispatch();
   // booking slice uses isLoading internally; map to loading for component logic
   const loading = useSelector((state: RootState) => (state as any).booking?.isLoading ?? false);
@@ -87,12 +88,7 @@ export default function BookShipmentPage() {
   const [calculatingRates, setCalculatingRates] = useState(false);
 
   // Redirect if not authenticated
-  useEffect(() => {
-    if (status === 'loading') return;
-    if (!session) {
-      router.push('/auth/signin?callbackUrl=/book-shipment');
-    }
-  }, [session, status, router]);
+  // Auth check skipped in mock mode
 
   // Calculate courier rates when locations change
   useEffect(() => {
@@ -210,20 +206,15 @@ export default function BookShipmentPage() {
 
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await dispatch(createBooking(bookingPayload) as any);
+  // cast to any for mock store
+  await dispatch(createBooking(bookingPayload) as any);
       router.push('/bookings');
     } catch (error) {
       console.error('Error creating booking:', error);
     }
   };
 
-  if (status === 'loading') {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
+  // loading state skipped in mock mode
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">

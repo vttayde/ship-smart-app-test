@@ -22,11 +22,7 @@ interface User {
 }
 
 // Async thunk for login
-export const loginUser = createAsyncThunk<
-  User,
-  LoginCredentials,
-  { rejectValue: string }
->(
+export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async (credentials, { rejectWithValue }) => {
     try {
@@ -50,11 +46,7 @@ export const loginUser = createAsyncThunk<
 );
 
 // Async thunk for signup
-export const signupUser = createAsyncThunk<
-  User,
-  SignupData,
-  { rejectValue: string }
->(
+export const signupUser = createAsyncThunk(
   'auth/signupUser',
   async (userData, { rejectWithValue }) => {
     try {
@@ -78,11 +70,7 @@ export const signupUser = createAsyncThunk<
 );
 
 // Async thunk for fetching courier services
-export const fetchCourierServices = createAsyncThunk<
-  any[],
-  { from: string; to: string; weight: number },
-  { rejectValue: string }
->(
+export const fetchCourierServices = createAsyncThunk(
   'app/fetchCourierServices',
   async ({ from, to, weight }, { rejectWithValue }) => {
     try {
@@ -106,11 +94,7 @@ export const fetchCourierServices = createAsyncThunk<
 );
 
 // Async thunk for creating booking
-export const createBooking = createAsyncThunk<
-  any,
-  any,
-  { rejectValue: string }
->(
+export const createBooking = createAsyncThunk(
   'app/createBooking',
   async (bookingData, { rejectWithValue }) => {
     try {
